@@ -8,6 +8,7 @@ const AddButton = ({todos, setTodos}) => {
     const [modalVisible, setModalVisible] = useState(false)
     const [text, onChangeText] = useState('')
     const [savedTodo, setSavedTodo] = useState([])
+    const [errorMessage, setErroreMessage] = useState('')
 
     const openAlert = () =>{
         setModalVisible(true)
@@ -16,15 +17,29 @@ const AddButton = ({todos, setTodos}) => {
     const closeModal = () =>{
         setModalVisible(false)
         onChangeText('')
+        setErroreMessage('')
+    }
+
+    const onChangeTodo = (e) =>{
+        if(e === ''){
+            setErroreMessage('Inserisci almeno un carattere')
+        }else {
+            setErroreMessage('')
+        }
+        onChangeText(e)
     }
 
     const saveTodo = async () =>{
         try{
-            const newSavedTodo = [...todos, text]
-            await AsyncStorage.setItem('todos', JSON.stringify(newSavedTodo))
-            setSavedTodo(newSavedTodo)
-            setTodos(newSavedTodo)
-            closeModal()
+            if(text === ''){
+                Alert.alert('Devi inserire almeno un carattere per creare un todo')
+            }else {
+                const newSavedTodo = [...todos, text]
+                await AsyncStorage.setItem('todos', JSON.stringify(newSavedTodo))
+                setSavedTodo(newSavedTodo)
+                setTodos(newSavedTodo)
+                closeModal()
+            }
         } catch (error){
             Alert.alert('Si è verificato un errore con il salvataggio')
         }
@@ -52,12 +67,15 @@ const AddButton = ({todos, setTodos}) => {
         >
             <View style={styles.modal}>
                 <View style={styles.inputFieldView}>
-                    <TextInput 
-                        onChangeText={onChangeText}
-                        value={text}
-                        placeholder='Inserisci nuovo todo...'
-                        style={styles.inputField}
-                    />
+                    <View>
+                        <TextInput 
+                            onChangeText={onChangeTodo}
+                            value={text}
+                            placeholder='Inserisci nuovo todo...'
+                            style={styles.inputField}
+                        />
+                        <Text style={styles.errorMessage}>{errorMessage}</Text>
+                    </View>
                     <View style={{display: 'flex', flexDirection: 'row', gap: 2}}>
                         <Pressable
                             style={[styles.buttonClose]}
@@ -110,7 +128,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         alignItems: 'center',
         borderRadius: 18,
-        gap: 18,
+        gap: 12,
     },
     buttonClose: {
         paddingVertical: 8,
@@ -126,6 +144,10 @@ const styles = StyleSheet.create({
         fontSize: 18,
         padding: 0,
         textAlign: 'center',
+    },
+    errorMessage: {
+        color: 'red',
+        margin: 0,
     }
 })
 

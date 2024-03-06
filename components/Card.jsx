@@ -8,10 +8,12 @@ const Card = ({todoText, indexTodo, todos, setTodos, navigation}) => {
     navigation.navigate('Todo', { todoText, indexTodo, todos, setTodos });
   }
 
+  const maxLength = 22
+
   return (
     <View style={styles.card}>
-        <View>
-            <Text style={{fontSize: 15}}>{todoText}</Text>
+        <View style={{width: '80%'}}>
+            <Text style={{fontSize: 15}}>{todoText.length > maxLength ? todoText.slice(0, maxLength) + '...' : todoText}</Text>
         </View>
         <TouchableOpacity style={styles.button} onPress={openTodo}>
           <Icon
