@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
-import { TouchableNativeFeedback, View, Text, StyleSheet, Modal, TextInput, Pressable, AsyncStorage, Alert } from 'react-native'
+import { TouchableNativeFeedback, View, Text, StyleSheet, Modal, TextInput, Pressable, Alert } from 'react-native'
 import Icon from "react-native-vector-icons/FontAwesome6";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const AddButton = () => {
+const AddButton = ({todos, setTodos}) => {
 
     const [modalVisible, setModalVisible] = useState(false)
     const [text, onChangeText] = useState('')
@@ -19,10 +20,10 @@ const AddButton = () => {
 
     const saveTodo = async () =>{
         try{
-            const newSavedTodo = [...todo, text]
+            const newSavedTodo = [...todos, text]
             await AsyncStorage.setItem('todos', JSON.stringify(newSavedTodo))
             setSavedTodo(newSavedTodo)
-            Alert.alert("Todo salvato")
+            setTodos(newSavedTodo)
             closeModal()
         } catch (error){
             Alert.alert('Si è verificato un errore con il salvataggio')

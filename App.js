@@ -1,8 +1,9 @@
-import { SafeAreaView, StyleSheet, Text, View, StatusBar, Dimensions, Alert, AsyncStorage } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View, StatusBar, Dimensions, Alert, FlatList } from 'react-native';
 import Navbar from './components/Navbar';
 import Card from './components/Card';
 import AddButton from './components/AddButton';
 import { useEffect, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function App() {
 
@@ -32,10 +33,13 @@ export default function App() {
       />
       <Navbar />
       <View style={styles.home}>
-        <Card />
-        <Card />
+        <FlatList 
+          data={savedTodos}
+          renderItem={({item, index}) => <Card todoText={item} indexTodo={index} todos={savedTodos} setTodos={setSavedTodos}/>}
+          keyExtractor={(item, index) => index.toString()}
+        />
       </View>
-      <AddButton />
+      <AddButton todos={savedTodos} setTodos={setSavedTodos}/>
     </SafeAreaView>
   );
 }
@@ -55,6 +59,5 @@ const styles = StyleSheet.create({
     paddingVertical: 28,
     display: 'flex',
     flexDirection: 'column',
-    gap: 18,
   }
 });
