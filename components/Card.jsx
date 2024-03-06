@@ -1,18 +1,11 @@
 import React from 'react'
-import { View, Text, StyleSheet, Button, Alert } from 'react-native'
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import Icon from "react-native-vector-icons/FontAwesome6";
 
-const Card = ({todoText, indexTodo, todos, setTodos}) => {
+const Card = ({todoText, indexTodo, todos, setTodos, navigation}) => {
 
-  const deleteTodo = async () =>{
-    try{
-      const newSavedTodo = todos.filter((item, index) => index !== indexTodo)
-      await AsyncStorage.setItem('todos', JSON.stringify(newSavedTodo))
-      setTodos(newSavedTodo)
-    } catch (error) {
-      Alert.alert("Errore nell'eliminazione del todo")
-      console.log(error);
-    }
+  const openTodo = () => {
+    navigation.navigate('Todo', { todoText, indexTodo, todos, setTodos });
   }
 
   return (
@@ -20,7 +13,13 @@ const Card = ({todoText, indexTodo, todos, setTodos}) => {
         <View>
             <Text style={{fontSize: 15}}>{todoText}</Text>
         </View>
-        <Button title='DELETE' color={'red'} onPress={deleteTodo}/>
+        <TouchableOpacity style={styles.button} onPress={openTodo}>
+          <Icon
+            name="eye"
+            color="#fff"
+            size={24}
+        />
+        </TouchableOpacity>
     </View>
   )
 }
@@ -35,6 +34,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         marginBottom: 18,
+    },
+    button: {
+      backgroundColor: 'transparent',
+      paddingHorizontal: 14,
+      paddingVertical: 8,
+      borderRadius: 2,
     }
 })
 
