@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     },
     checkBox: {
       borderRadius: 5,
-      padding: 8,
+      padding: 9,
     }
 })
 

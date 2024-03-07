@@ -91,6 +91,12 @@ const styles = StyleSheet.create({
         backgroundColor: 'orange',
         padding: 12,
         borderRadius: 8,
+        elevation: 8,
+        // Ombra su iOS 
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.3,
+        shadowRadius: 3,
     },
     modal: {
         position: 'absolute',

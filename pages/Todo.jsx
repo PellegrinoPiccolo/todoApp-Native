@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { SafeAreaView, StyleSheet, Text, View, StatusBar, Dimensions, Alert, FlatList, Button, TouchableOpacity } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View, StatusBar, Dimensions, Alert, FlatList, Button, TouchableOpacity, ScrollView } from 'react-native';
 import Navbar from '../components/Navbar';
 import Icon from "react-native-vector-icons/FontAwesome6";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
@@ -18,32 +18,34 @@ const Todo = ({route, navigation}) => {
 
   return (
     <SafeAreaView style={styles.container}>
-        <StatusBar
-            animated={true}
-            backgroundColor="orange"
-            barStyle={'light-content'}
-        />
-        <Navbar />
-        <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('Home')}>
-            <Icon
-                name="arrow-left"
-                color="#fff"
-                size={24}
+        <ScrollView>
+            <StatusBar
+                animated={true}
+                backgroundColor="orange"
+                barStyle={'light-content'}
             />
-        </TouchableOpacity>
-        <View style={styles.screen}>
-            <View style={styles.checkboxContainer}>
-                <CheckBox
-                    disabled={false}
-                    value={isSelected}
-                    onValueChange={() => (handleComplete(indexTodo))}
-                    color={'orange'}
-                    style={styles.checkBox}
+            <Navbar />
+            <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('Home')}>
+                <Icon
+                    name="arrow-left"
+                    color="#fff"
+                    size={24}
                 />
+            </TouchableOpacity>
+            <View style={styles.screen}>
+                <View style={styles.checkboxContainer}>
+                    <CheckBox
+                        disabled={false}
+                        value={isSelected}
+                        onValueChange={() => (handleComplete(indexTodo))}
+                        color={'orange'}
+                        style={styles.checkBox}
+                    />
+                </View>
+                <Text style={[styles.todoText, isSelected ? {textDecorationLine: 'line-through'} : '']}>{todoText}</Text>
+                <Button title="DELETE" color="red" onPress={() => deleteTodo(indexTodo, navigation)}/>
             </View>
-            <Text style={[styles.todoText, isSelected ? {textDecorationLine: 'line-through'} : '']}>{todoText}</Text>
-            <Button title="DELETE" color="red" onPress={() => deleteTodo(indexTodo, navigation)}/>
-        </View>
+        </ScrollView>
     </SafeAreaView>
   )
 }
@@ -53,9 +55,10 @@ const styles = StyleSheet.create({
         flex: 1,
         width: Dimensions.get('window').width,
         position: 'relative',
+        minHeight: Dimensions.get('window').height,
     },
     screen: {
-        minHeight: '100%',
+        minHeight: Dimensions.get('window').height - 50,
         backgroundColor: 'lightyellow',
         width: '100%',
         padding: 28,

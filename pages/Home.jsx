@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { SafeAreaView, StyleSheet, View, StatusBar, Dimensions, FlatList, Text } from 'react-native';
+import { SafeAreaView, StyleSheet, View, StatusBar, Dimensions, FlatList, Text, ScrollView } from 'react-native';
 import Navbar from '../components/Navbar';
 import Card from '../components/Card';
 import AddButton from '../components/AddButton';
@@ -12,12 +12,14 @@ const Home = ({navigation}) => {
   
   return (
     <SafeAreaView style={styles.container}>
+
         <StatusBar
         animated={true}
         backgroundColor="orange"
         barStyle={'light-content'}
         />
         <Navbar />
+        <ScrollView>
         <View style={styles.home}>
           <View>
             <Text style={styles.titleSection}>DA COMPLETARE</Text>
@@ -36,6 +38,7 @@ const Home = ({navigation}) => {
           />
         </View>
         </View>
+        </ScrollView>
         <AddButton />
     </SafeAreaView>
   )
