@@ -11,7 +11,7 @@ const Card = ({todoText, todoCompleted, indexTodo, navigation}) => {
   const { handleComplete, isSelected, setIsSelected } = useContext(TodosContext)
 
   const openTodo = () => {
-    navigation.navigate('Todo', { todoText, todoCompleted, indexTodo });
+    navigation.navigate('Todo', { todoCompleted, indexTodo });
   }
 
   const maxLength = 22

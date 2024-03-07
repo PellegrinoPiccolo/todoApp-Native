@@ -63,8 +63,24 @@ export const TodosProvider = ({children}) =>{
         }
     }
 
+    const modTodo = async (text, closeModal, indexTodo) => {
+      try{
+        if(text === ''){
+          Alert.alert("Devi inserire almeno un carattere per modificare un todo")
+        }else {
+          const newTodos = [...todos]
+          newTodos[indexTodo].text = text
+          await AsyncStorage.setItem('todos', JSON.stringify(newTodos))
+          setTodos(newTodos)
+          closeModal()
+        }
+      } catch (error) {
+        Alert.alert("Impossibili modificare il todo")
+      }
+    }
+
     return (
-        <TodosContext.Provider value={{todos, setTodos, handleComplete, deleteTodo, saveTodo, isSelected, setIsSelected}}>
+        <TodosContext.Provider value={{todos, setTodos, handleComplete, deleteTodo, saveTodo, isSelected, setIsSelected, modTodo}}>
             {children}
         </TodosContext.Provider>
     )

@@ -5,12 +5,15 @@ import Icon from "react-native-vector-icons/FontAwesome6";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import TodosContext from '../context/TodosContext';
 import CheckBox from 'expo-checkbox';
+import ModButton from '../components/ModButton';
 
 const Todo = ({route, navigation}) => {
 
-    const { handleComplete, deleteTodo, isSelected, setIsSelected } = useContext(TodosContext)
+    const { handleComplete, deleteTodo, isSelected, setIsSelected, todos} = useContext(TodosContext)
 
-    const { todoText, todoCompleted, indexTodo } = route.params;
+    const { todoCompleted, indexTodo } = route.params;
+
+    const todoText = todos[indexTodo].text
 
     useEffect(() => {
         setIsSelected(todoCompleted)
@@ -46,6 +49,7 @@ const Todo = ({route, navigation}) => {
                 <Button title="DELETE" color="red" onPress={() => deleteTodo(indexTodo, navigation)}/>
             </View>
         </ScrollView>
+        <ModButton textTodo={todoText} indexTodo={indexTodo}/>
     </SafeAreaView>
   )
 }
