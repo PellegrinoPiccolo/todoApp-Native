@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { SafeAreaView, StyleSheet, View, StatusBar, Dimensions, FlatList } from 'react-native';
+import { SafeAreaView, StyleSheet, View, StatusBar, Dimensions, FlatList, Text } from 'react-native';
 import Navbar from '../components/Navbar';
 import Card from '../components/Card';
 import AddButton from '../components/AddButton';
@@ -8,7 +8,7 @@ import TodosContext from '../context/TodosContext';
 
 const Home = ({navigation}) => {
 
-  const {todos, setTodos} = useContext(TodosContext)
+  const {todos, setTodos, todosCompleted, todosToComplete} = useContext(TodosContext)
   
   return (
     <SafeAreaView style={styles.container}>
@@ -19,11 +19,22 @@ const Home = ({navigation}) => {
         />
         <Navbar />
         <View style={styles.home}>
-        <FlatList 
-            data={todos}
-            renderItem={({item, index}) => <Card todoText={item.text} todoCompleted={item.completed} indexTodo={index} navigation={navigation}/>}
-            keyExtractor={(item, index) => index.toString()}
-        />
+          <View>
+            <Text style={styles.titleSection}>DA COMPLETARE</Text>
+            <FlatList 
+                data={todos}
+                renderItem={({item, index}) => !item.completed && <Card todoText={item.text} todoCompleted={item.completed} indexTodo={index} navigation={navigation}/>}
+                keyExtractor={(item, index) => index.toString()}
+            />
+        </View>
+        <View>
+          <Text style={[styles.titleSection, {marginTop: 8}]}>COMPLETATI</Text>
+          <FlatList 
+              data={todos}
+              renderItem={({item, index}) => item.completed && <Card todoText={item.text} todoCompleted={item.completed} indexTodo={index} navigation={navigation}/>}
+              keyExtractor={(item, index) => index.toString()}
+          />
+        </View>
         </View>
         <AddButton />
     </SafeAreaView>
@@ -45,6 +56,12 @@ const styles = StyleSheet.create({
       paddingVertical: 28,
       display: 'flex',
       flexDirection: 'column',
+    },
+    titleSection: {
+      fontSize: 18,
+      fontWeight: 'bold',
+      marginBottom: 5,
+      marginLeft: 1,
     }
   });
 
