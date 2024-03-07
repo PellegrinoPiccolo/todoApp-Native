@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
       position: 'relative',
     },
     home: {
-      minHeight: Dimensions.get('window').height,
+      minHeight: Dimensions.get('window').height - 50,
       backgroundColor: 'lightyellow',
       width: '100%',
       marginTop: 0,

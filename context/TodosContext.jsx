@@ -37,12 +37,13 @@ export const TodosProvider = ({children}) =>{
       }
 
       const deleteTodo = async (indexTodo, navigation) => {
+        navigation.navigate('Home')
         try{
             const newSavedTodo = todos.filter((item, index) => index !== indexTodo)
             await AsyncStorage.setItem('todos', JSON.stringify(newSavedTodo))
             setTodos(newSavedTodo)
-            navigation.navigate('Home')
         } catch (error) {
+          console.log(error);
             Alert.alert("Errore con l'eliminazione del todo")
         }
     }
