@@ -32,11 +32,13 @@ const Todo = ({route, navigation}) => {
             />
         </TouchableOpacity>
         <View style={styles.screen}>
-            <View style={styles.checkbox}>
+            <View style={styles.checkboxContainer}>
                 <CheckBox
                     disabled={false}
                     value={isSelected}
                     onValueChange={() => (handleComplete(indexTodo))}
+                    color={'orange'}
+                    style={styles.checkBox}
                 />
             </View>
             <Text style={[styles.todoText, isSelected ? {textDecorationLine: 'line-through'} : '']}>{todoText}</Text>
@@ -64,16 +66,21 @@ const styles = StyleSheet.create({
     todoText: {
         fontSize: 21,
         textAlign: 'center',
+        marginTop: 18,
     },
     backButton: {
         position: 'absolute',
         top:18,
         left: 18,
     },
-    checkbox: {
+    checkboxContainer: {
         position: 'absolute',
         top: 18,
         right: 18,
+    },
+    checkBox: {
+        borderRadius: 5,
+        padding: 10,
     }
 })
 

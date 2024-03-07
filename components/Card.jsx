@@ -24,11 +24,13 @@ const Card = ({todoText, todoCompleted, indexTodo, navigation}) => {
     <View style={styles.card}>
       <CheckBox
         disabled={false}
-        value={isSelected}
+        value={todoCompleted}
         onValueChange={() => (handleComplete(indexTodo))}
+        style={styles.checkBox}
+        color={'black'}
       />
         <View style={{width: '58%'}}>
-            <Text style={isSelected ? {fontSize: 18, textDecorationLine: 'line-through'} : {fontSize: 18}} >{todoText.length > maxLength ? todoText.slice(0, maxLength) + '...' : todoText}</Text>
+            <Text style={todoCompleted ? {fontSize: 18, textDecorationLine: 'line-through'} : {fontSize: 18}} >{todoText.length > maxLength ? todoText.slice(0, maxLength) + '...' : todoText}</Text>
         </View>
         <TouchableOpacity style={styles.button} onPress={openTodo}>
           <Icon
@@ -57,6 +59,10 @@ const styles = StyleSheet.create({
       paddingHorizontal: 14,
       paddingVertical: 8,
       borderRadius: 2,
+    },
+    checkBox: {
+      borderRadius: 5,
+      padding: 8,
     }
 })
 

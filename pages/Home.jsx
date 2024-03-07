@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { SafeAreaView, StyleSheet, View, StatusBar, Dimensions, Alert, FlatList } from 'react-native';
+import { SafeAreaView, StyleSheet, View, StatusBar, Dimensions, FlatList } from 'react-native';
 import Navbar from '../components/Navbar';
 import Card from '../components/Card';
 import AddButton from '../components/AddButton';
