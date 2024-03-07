@@ -1,23 +1,20 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { SafeAreaView, StyleSheet, Text, View, StatusBar, Dimensions, Alert, FlatList, Button, TouchableOpacity } from 'react-native';
 import Navbar from '../components/Navbar';
 import Icon from "react-native-vector-icons/FontAwesome6";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import BouncyCheckbox from "react-native-bouncy-checkbox";
+import TodosContext from '../context/TodosContext';
+import CheckBox from 'expo-checkbox';
 
 const Todo = ({route, navigation}) => {
 
-    const { todoText, indexTodo, todos, setTodos } = route.params;
+    const { handleComplete, deleteTodo, isSelected, setIsSelected } = useContext(TodosContext)
 
-    const deleteTodo = async () => {
-        try{
-            const newSavedTodo = todos.filter((item, index) => index !== indexTodo)
-            await AsyncStorage.setItem('todos', JSON.stringify(newSavedTodo))
-            setTodos(newSavedTodo)
-            navigation.navigate('Home')
-        } catch (error) {
-            Alert.alert("Errore con l'eliminazione del todo")
-        }
-    }
+    const { todoText, todoCompleted, indexTodo } = route.params;
+
+    useEffect(() => {
+        setIsSelected(todoCompleted)
+    }, [])
 
   return (
     <SafeAreaView style={styles.container}>
@@ -35,8 +32,15 @@ const Todo = ({route, navigation}) => {
             />
         </TouchableOpacity>
         <View style={styles.screen}>
-            <Text style={styles.todoText}>{todoText}</Text>
-            <Button title="DELETE" color="red" onPress={deleteTodo}/>
+            <View style={styles.checkbox}>
+                <CheckBox
+                    disabled={false}
+                    value={isSelected}
+                    onValueChange={() => (handleComplete(indexTodo))}
+                />
+            </View>
+            <Text style={[styles.todoText, isSelected ? {textDecorationLine: 'line-through'} : '']}>{todoText}</Text>
+            <Button title="DELETE" color="red" onPress={() => deleteTodo(indexTodo, navigation)}/>
         </View>
     </SafeAreaView>
   )
@@ -65,6 +69,11 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top:18,
         left: 18,
+    },
+    checkbox: {
+        position: 'absolute',
+        top: 18,
+        right: 18,
     }
 })
 

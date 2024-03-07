@@ -1,32 +1,15 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { SafeAreaView, StyleSheet, View, StatusBar, Dimensions, Alert, FlatList } from 'react-native';
 import Navbar from '../components/Navbar';
 import Card from '../components/Card';
 import AddButton from '../components/AddButton';
-import { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import TodosContext from '../context/TodosContext';
 
 const Home = ({navigation}) => {
 
-    const [savedTodos, setSavedTodos] = useState([])
-
-    useEffect(() =>{
-      loadTodo()
-    }, [])
+  const {todos, setTodos} = useContext(TodosContext)
   
-    const loadTodo = async () =>{
-      try{
-        const todos = await AsyncStorage.getItem('todos')
-        console.log(todos);
-        if (todos !== null){
-          setSavedTodos(JSON.parse(todos))
-        }
-      } catch (error) {
-        Alert.alert("Errore durante il caricamento dei todo")
-      }
-    }
-  
-
   return (
     <SafeAreaView style={styles.container}>
         <StatusBar
@@ -37,12 +20,12 @@ const Home = ({navigation}) => {
         <Navbar />
         <View style={styles.home}>
         <FlatList 
-            data={savedTodos}
-            renderItem={({item, index}) => <Card todoText={item.text} todoCompleted={item.completed} indexTodo={index} todos={savedTodos} setTodos={setSavedTodos} navigation={navigation}/>}
+            data={todos}
+            renderItem={({item, index}) => <Card todoText={item.text} todoCompleted={item.completed} indexTodo={index} navigation={navigation}/>}
             keyExtractor={(item, index) => index.toString()}
         />
         </View>
-        <AddButton todos={savedTodos} setTodos={setSavedTodos}/>
+        <AddButton />
     </SafeAreaView>
   )
 }

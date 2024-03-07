@@ -1,13 +1,16 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { TouchableNativeFeedback, View, Text, StyleSheet, Modal, TextInput, Pressable, Alert } from 'react-native'
 import Icon from "react-native-vector-icons/FontAwesome6";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import TodosContext from '../context/TodosContext';
 
-const AddButton = ({todos, setTodos}) => {
+const AddButton = () => {
+
+    const {todos, setTodos, saveTodo} = useContext(TodosContext)
 
     const [modalVisible, setModalVisible] = useState(false)
     const [text, onChangeText] = useState('')
-    const [savedTodo, setSavedTodo] = useState([])
+    const [savedTodo, setSavedTodo] = useState()
     const [errorMessage, setErroreMessage] = useState('')
 
     const openAlert = () =>{
@@ -27,23 +30,6 @@ const AddButton = ({todos, setTodos}) => {
             setErroreMessage('')
         }
         onChangeText(e)
-    }
-
-    const saveTodo = async () =>{
-        try{
-            if(text === ''){
-                Alert.alert('Devi inserire almeno un carattere per creare un todo')
-            }else {
-                const newTodo = { text: text, completed: false }
-                const newSavedTodo = [...todos, newTodo]
-                await AsyncStorage.setItem('todos', JSON.stringify(newSavedTodo))
-                setSavedTodo(newSavedTodo)
-                setTodos(newSavedTodo)
-                closeModal()
-            }
-        } catch (error){
-            Alert.alert('Si è verificato un errore con il salvataggio')
-        }
     }
 
   return (
@@ -85,7 +71,7 @@ const AddButton = ({todos, setTodos}) => {
                         </Pressable>
                         <Pressable
                             style={[styles.buttonClose]}
-                            onPress={saveTodo}>
+                            onPress={() => saveTodo(text, closeModal)}>
                             <Text style={styles.textButtonClose}>Salva</Text>
                         </Pressable>
                     </View>
