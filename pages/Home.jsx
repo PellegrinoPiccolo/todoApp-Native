@@ -17,6 +17,7 @@ const Home = ({navigation}) => {
     const loadTodo = async () =>{
       try{
         const todos = await AsyncStorage.getItem('todos')
+        console.log(todos);
         if (todos !== null){
           setSavedTodos(JSON.parse(todos))
         }
@@ -37,7 +38,7 @@ const Home = ({navigation}) => {
         <View style={styles.home}>
         <FlatList 
             data={savedTodos}
-            renderItem={({item, index}) => <Card todoText={item} indexTodo={index} todos={savedTodos} setTodos={setSavedTodos} navigation={navigation}/>}
+            renderItem={({item, index}) => <Card todoText={item.text} todoCompleted={item.completed} indexTodo={index} todos={savedTodos} setTodos={setSavedTodos} navigation={navigation}/>}
             keyExtractor={(item, index) => index.toString()}
         />
         </View>

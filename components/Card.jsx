@@ -1,8 +1,10 @@
-import React from 'react'
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native'
 import Icon from "react-native-vector-icons/FontAwesome6";
+import BouncyCheckbox from "react-native-bouncy-checkbox";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const Card = ({todoText, indexTodo, todos, setTodos, navigation}) => {
+const Card = ({todoText, todoCompleted, indexTodo, todos, setTodos, navigation}) => {
 
   const openTodo = () => {
     navigation.navigate('Todo', { todoText, indexTodo, todos, setTodos });
@@ -10,10 +12,38 @@ const Card = ({todoText, indexTodo, todos, setTodos, navigation}) => {
 
   const maxLength = 22
 
+  const [isSelected, setIsSelected] = useState(false)
+
+  useEffect(() => {
+    setIsSelected(todoCompleted)
+  }, [])
+
+  const handleComplete = async () =>{
+    setIsSelected(!isSelected)
+    try{
+      const newTodos = [...todos]
+      newTodos[indexTodo].completed = !newTodos[indexTodo].completed
+      setTodos(newTodos)
+      await AsyncStorage.setItem('todos', JSON.stringify(newTodos))
+    } catch (error) {
+      console.log(error);
+      Alert.alert("Impossibile completare il todo")
+    }
+  }
+
   return (
     <View style={styles.card}>
-        <View style={{width: '80%'}}>
-            <Text style={{fontSize: 15}}>{todoText.length > maxLength ? todoText.slice(0, maxLength) + '...' : todoText}</Text>
+      <BouncyCheckbox
+          size={25}
+          isChecked={todoCompleted}
+          fillColor="black"
+          unfillColor="#FFFFFF"
+          iconStyle={{ borderColor: "black" }}
+          innerIconStyle={{ borderWidth: 2 }}
+          onPress={handleComplete}
+        />
+        <View style={{width: '58%'}}>
+            <Text style={isSelected ? {fontSize: 18, textDecorationLine: 'line-through'} : {fontSize: 18}} >{todoText.length > maxLength ? todoText.slice(0, maxLength) + '...' : todoText}</Text>
         </View>
         <TouchableOpacity style={styles.button} onPress={openTodo}>
           <Icon

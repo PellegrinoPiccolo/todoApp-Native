@@ -34,7 +34,8 @@ const AddButton = ({todos, setTodos}) => {
             if(text === ''){
                 Alert.alert('Devi inserire almeno un carattere per creare un todo')
             }else {
-                const newSavedTodo = [...todos, text]
+                const newTodo = { text: text, completed: false }
+                const newSavedTodo = [...todos, newTodo]
                 await AsyncStorage.setItem('todos', JSON.stringify(newSavedTodo))
                 setSavedTodo(newSavedTodo)
                 setTodos(newSavedTodo)
