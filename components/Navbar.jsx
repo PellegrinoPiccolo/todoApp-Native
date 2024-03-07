@@ -1,15 +1,13 @@
 import React from 'react'
-import { View, StyleSheet, Text } from 'react-native'
-import Icon from "react-native-vector-icons/FontAwesome6";
+import { View, StyleSheet, Text, Image } from 'react-native'
 
 const Navbar = () => {
   return (
     <View style={styles.navbar}>
         <Text style={styles.navText}>TO-DO</Text>
-        <Icon
-            name="sticky-note"
-            color="#fff"
-            size={25}
+        <Image 
+            source={require('../assets/icon.png')}
+            style={styles.logo}
         />
     </View>
   )
@@ -34,6 +32,10 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 28,
         textAlign: 'center',
+    },
+    logo: {
+        width: 40,
+        height: 40,
     }
 })
 
