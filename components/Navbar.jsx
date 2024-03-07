@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, StyleSheet, Text, SafeAreaView, Dimensions, Button, TouchableOpacity, TouchableHighlight, TouchableNativeFeedback} from 'react-native'
+import { View, StyleSheet, Text } from 'react-native'
 import Icon from "react-native-vector-icons/FontAwesome6";
 
 const Navbar = () => {
@@ -20,7 +20,6 @@ const styles = StyleSheet.create({
         position: 'fixed',
         top: 0,
         left: 0,
-        //width: Dimensions.get('window').width,
         width: '100%',
         backgroundColor: 'orange',
         paddingVertical: 10,

@@ -1,8 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { SafeAreaView, StyleSheet, Text, View, StatusBar, Dimensions, Alert, FlatList, Button, TouchableOpacity, ScrollView } from 'react-native';
 import Navbar from '../components/Navbar';
 import Icon from "react-native-vector-icons/FontAwesome6";
-import BouncyCheckbox from "react-native-bouncy-checkbox";
 import TodosContext from '../context/TodosContext';
 import CheckBox from 'expo-checkbox';
 import ModButton from '../components/ModButton';

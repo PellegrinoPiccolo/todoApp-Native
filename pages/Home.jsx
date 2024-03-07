@@ -3,7 +3,6 @@ import { SafeAreaView, StyleSheet, View, StatusBar, Dimensions, FlatList, Text, 
 import Navbar from '../components/Navbar';
 import Card from '../components/Card';
 import AddButton from '../components/AddButton';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import TodosContext from '../context/TodosContext';
 
 const Home = ({navigation}) => {

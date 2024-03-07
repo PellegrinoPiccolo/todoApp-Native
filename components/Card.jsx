@@ -1,14 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native'
+import React, { useContext, useEffect } from 'react'
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import Icon from "react-native-vector-icons/FontAwesome6";
-import BouncyCheckbox from "react-native-bouncy-checkbox";
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import TodosContext from '../context/TodosContext';
 import CheckBox from 'expo-checkbox';
 
 const Card = ({todoText, todoCompleted, indexTodo, navigation}) => {
 
-  const { handleComplete, isSelected, setIsSelected } = useContext(TodosContext)
+  const { handleComplete, setIsSelected } = useContext(TodosContext)
 
   const openTodo = () => {
     navigation.navigate('Todo', { todoCompleted, indexTodo });

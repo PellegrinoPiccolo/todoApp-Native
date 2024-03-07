@@ -1,12 +1,11 @@
 import React, { useContext, useState } from 'react'
-import { TouchableNativeFeedback, View, Text, StyleSheet, Modal, TextInput, Pressable, Alert } from 'react-native'
+import { TouchableNativeFeedback, View, Text, StyleSheet, Modal, TextInput, Pressable } from 'react-native'
 import Icon from "react-native-vector-icons/FontAwesome6";
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import TodosContext from '../context/TodosContext';
 
 const AddButton = () => {
 
-    const {todos, setTodos, saveTodo} = useContext(TodosContext)
+    const {saveTodo} = useContext(TodosContext)
 
     const [modalVisible, setModalVisible] = useState(false)
     const [text, onChangeText] = useState('')
